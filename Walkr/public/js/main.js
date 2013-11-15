@@ -1,4 +1,5 @@
-var DEV_MODE = true;
+var DEV_MODE = true,
+    currentLocation;
 
 Parse.initialize("qoSmyDZZvuaYLkvi5uAEwR6DAx2OQABk4DXMIIeG", "hWpPY4HIHh2eF0d2C2Xwc08pF919gjM3TeDPQ2OO");
 Parse.$ = jQuery;
@@ -91,7 +92,12 @@ var AppView = Parse.View.extend({
                 // give notification that geolocation is necessary
             };
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var coords = position.coords || position.coordinate || position;
+                currentLocation = new Parse.GeoPoint({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
+                });
                 $.getScript('//connect.facebook.com/en_UK/all.js', function(){
                     Parse.FacebookUtils.init({
                       appId      : '612532842138130',                        // App ID from the app dashboard
@@ -118,7 +124,7 @@ var LoggedInView = Parse.View.extend({
     events : {
         'click .btn-logout' : 'logout',
         'click .walk' : 'viewWalk',
-        'click .btn-start' : 'startWalk',
+        'click .btn-start-walk' : 'startWalk',
         'click .btn-join' : 'joinWalk'
     },
     el : '#app-container',
@@ -136,6 +142,28 @@ var LoggedInView = Parse.View.extend({
     },
     logout : function() {
         Parse.User.logOut();
+    },
+    startWalk : function() {
+        var walk = Walk.create({
+            organizer : Parse.User.current(),
+            startLocation : currentLocation,
+            startTime : new Date()
+        });
+        console.log('starting a walk')
+        walk.save(null, {
+            success : function() {
+                console.log('walk saved');
+            },
+            error : function(error) {
+                console.error(error);
+            }
+        });
+    },
+    viewWalk : function() {
+
+    },
+    joinWalk : function() {
+
     }
 });
 var LoggedOutView = Parse.View.extend({
