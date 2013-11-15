@@ -83,6 +83,61 @@ var Walk = Parse.Object.extend('Walk', {
 });
 
 // views
+AppView = parse.View.extend({
+    events : {},
+    initialize : function() {
+        this.render();
+    },
+    render : function() {
+        if (Parse.User.current()) {
 
+        }
+    }
+});
+LoggedInView = Parse.View.extend({
+    events : {
+        'click .btn-logout' : 'logout',
+        'click .walk' : 'viewWalk',
+        'click .btn-start' : 'startWalk',
+        'click .btn-join' : 'joinWalk'
+    }
+});
+LoggedOutView = Parse.Vew.extend({
+    events : {
+        'click .btn-fb-login' : 'fbLogin'
+    },
+    initialize : function() {
+        this.render();
+    },
+    render : function() {
+
+    },
+    fbLogin : function() {
+        Parse.FacebookUtils.logIn(null, {
+            success: function(user) {
+                if (!user.existed()) {
+                    // new user
+                } else {
+                    // existing user
+                }
+                new LoggedInView()
+          },
+          error: function(user, error) {
+              console.log("User cancelled the Facebook login or did not fully authorize.");
+          }
+        });
+    }
+});
+DashboardView = Parse.View.extend({
+    events : {
+
+    },
+    initialize : function() {
+
+    },
+    render : function() {
+
+    }
+});
 
 // router
