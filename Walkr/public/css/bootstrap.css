@@ -6813,3 +6813,6 @@ td.visible-print {
 .navbar .container a {
     color: #000;
 }
+
+.logged-in .hero, .logged-in .btn-fb-login { display: none; }
+.logged-out .btn-start-walk, .logged-out .walks { display: none; }
