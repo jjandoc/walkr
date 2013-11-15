@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Walkr": {
+            "applicationId": "qoSmyDZZvuaYLkvi5uAEwR6DAx2OQABk4DXMIIeG", 
+            "masterKey": "4QWDrjUp3Jm1Qw0D9fkhYT6xwoYvtZcBiCKJvNQU"
+        }, 
+        "_default": {
+            "link": "Walkr"
+        }
+    }
+}
