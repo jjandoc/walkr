@@ -92,7 +92,15 @@ var AppView = Parse.View.extend({
             };
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function() {
-                thisView.render();
+                $.getScript('//connect.facebook.com/en_UK/all.js', function(){
+                    Parse.FacebookUtils.init({
+                      appId      : '612532842138130',                        // App ID from the app dashboard
+                      channelUrl : '//walkr.parseapp.com/channel.html', // Channel file for x-domain comms
+                      status     : true,                                 // Check Facebook Login status
+                      xfbml      : true                                  // Look for social plugins on the page
+                    });
+                    thisView.render();
+                });
             }, navigatorError());
         } else {
             navigatorError();
