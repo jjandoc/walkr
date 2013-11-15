@@ -46,6 +46,7 @@ button.btn, button.btn-large {
 }
 .jumbotron {
     background: #444;
+    padding: 20px;
 }
 .hero img {
     max-width: 100%;
