@@ -6803,3 +6803,13 @@ td.visible-print {
     display: none !important;
   }
 }
+
+.navbar .container {
+    font-weight: bold;
+    background: yellow;
+    color: #000;
+    text-align: center;
+}
+.navbar .container a {
+    color: #000;
+}

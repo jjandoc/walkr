@@ -11,6 +11,7 @@
 
 body {
     background: #000;
+    color: #fff;
 }
  .navbar .container, .navbar {
     font-weight: bold;
@@ -21,8 +22,28 @@ body {
     height: 50px;
     line-height: 50px;
     font-size: 36px;
-    background-image: none;
+    background-image: none !important;
 }
 .navbar .container a {
     color: #000;
+    letter-spacing: -3px;
+}
+button.btn, button.btn-large {
+    font-weight: bold;
+}
+.walk {
+    position: relative;
+}
+.jumbotron p {
+    text-align: center;
+}
+.btn.btn-primary.btn-lg.btn-start-walk {
+    background: yellow;
+    color: black;
+    font-weight: bold;
+    text-shadow: none;
+    font-size: 26px;
+}
+.jumbotron {
+    background: #444;
 }
