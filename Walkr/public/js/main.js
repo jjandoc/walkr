@@ -86,11 +86,22 @@ var Walk = Parse.Object.extend('Walk', {
 AppView = parse.View.extend({
     events : {},
     initialize : function() {
-        this.render();
+        var navigatorError = function() {
+            // give notification that geolocation is necessary
+        };
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function() {
+                this.render();
+            }, navigatorError());
+        } else {
+            navigatorError();
+        }
     },
     render : function() {
         if (Parse.User.current()) {
-
+            new LoggedInView();
+        } else {
+            new LoggedOutView();
         }
     }
 });
@@ -100,6 +111,15 @@ LoggedInView = Parse.View.extend({
         'click .walk' : 'viewWalk',
         'click .btn-start' : 'startWalk',
         'click .btn-join' : 'joinWalk'
+    },
+    initialize : function() {
+        this.render();
+    },
+    render : function() {
+
+    },
+    logout : function() {
+        Parse.User.logOut();
     }
 });
 LoggedOutView = Parse.Vew.extend({
