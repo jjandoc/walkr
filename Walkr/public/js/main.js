@@ -83,15 +83,16 @@ var Walk = Parse.Object.extend('Walk', {
 });
 
 // views
-AppView = parse.View.extend({
+var AppView = Parse.View.extend({
     events : {},
     initialize : function() {
-        var navigatorError = function() {
-            // give notification that geolocation is necessary
-        };
+        var thisView = this,
+            navigatorError = function() {
+                // give notification that geolocation is necessary
+            };
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function() {
-                this.render();
+                thisView.render();
             }, navigatorError());
         } else {
             navigatorError();
@@ -105,32 +106,46 @@ AppView = parse.View.extend({
         }
     }
 });
-LoggedInView = Parse.View.extend({
+var LoggedInView = Parse.View.extend({
     events : {
         'click .btn-logout' : 'logout',
         'click .walk' : 'viewWalk',
         'click .btn-start' : 'startWalk',
         'click .btn-join' : 'joinWalk'
     },
+    el : '#app-container',
     initialize : function() {
         this.render();
     },
     render : function() {
-
+        var data = {},
+            thisView = this;
+        templateLoader.loadRemoteTemplate('loggedInView', '/templates/loggedInView.html', function(template) {
+            var compiled = _.template(template);
+            thisView.$el.html(compiled(data));
+            thisView.delegateEvents();
+        });
     },
     logout : function() {
         Parse.User.logOut();
     }
 });
-LoggedOutView = Parse.Vew.extend({
+var LoggedOutView = Parse.View.extend({
     events : {
         'click .btn-fb-login' : 'fbLogin'
     },
+    el : '#app-container',
     initialize : function() {
         this.render();
     },
     render : function() {
-
+        var data = {},
+            thisView = this;
+        templateLoader.loadRemoteTemplate('loggedOutView', '/templates/loggedOutView.html', function(template) {
+            var compiled = _.template(template);
+            thisView.$el.html(compiled(data));
+            thisView.delegateEvents();
+        });
     },
     fbLogin : function() {
         Parse.FacebookUtils.logIn(null, {
@@ -148,7 +163,7 @@ LoggedOutView = Parse.Vew.extend({
         });
     }
 });
-DashboardView = Parse.View.extend({
+var DashboardView = Parse.View.extend({
     events : {
 
     },
@@ -161,3 +176,5 @@ DashboardView = Parse.View.extend({
 });
 
 // router
+
+new AppView();
