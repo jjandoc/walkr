@@ -61,6 +61,12 @@ templateLoader.loadLocalTemplates();
 // models
 var Walk = Parse.Object.extend('Walk', {
     // instance methods
+    addWalker : function(user) {
+        var thisWalk = this;
+        thisWalk.relation('participants').add(user);
+        // notify organizer here of new participant
+        thisWalk.save();
+    }
 }, {
     // class methods
     create : function(options) {
